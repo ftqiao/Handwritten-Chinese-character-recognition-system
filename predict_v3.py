@@ -3,9 +3,11 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.image as mpimg
 
-model = tf.keras.models.load_model('Chinese_recognition_model_v2.h5')
+model = tf.keras.models.load_model('Chinese_recognition_model_v3.h5')
 
-img = mpimg.imread('data/test/00034/2190.png')
+# img = mpimg.imread('data/test/00003/30227.png')
+img = mpimg.imread('my_picture/万-614-3.png')
+
 img2 = cv2.resize(img, (64, 64))
 img3 = np.zeros((1, img2.shape[0], img2.shape[1], img2.shape[2]))  # (1, 64, 64, 3)
 img3[0, :] = img2
@@ -21,4 +23,5 @@ class_names = ['一', '丁', '七', '万', '丈', '三', '上', '下', '不', '�
                '京', '亭', '亮', '亲', '人', '亿', '什', '仁', '仅', '仆', '仇', '今', '介', '仍', '从', '仑', '仓']
 
 print(class_names[predicted_label])
+
 print(100 * np.max(pre[0]))
