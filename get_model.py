@@ -2,6 +2,7 @@ import keras.backend as k
 from keras.models import Sequential
 from keras.layers import Dropout, Flatten, Dense
 from keras.layers import Conv2D, MaxPooling2D
+import tensorflow as tf
 
 
 def get_model():
@@ -22,15 +23,15 @@ def get_model():
 
     model.add(Flatten())
     model.add(Dropout(0.2))
-    model.add(Dense(512, activation='relu'))
+    model.add(Dense(1024, activation='relu'))
 
     model.add(Dropout(0.2))
-    model.add(Dense(100, activation='softmax'))
+    model.add(Dense(1022, activation='softmax'))
 
     model.summary()
 
     # 选择优化器和损失函数
-    model.compile(optimizer='adam',
+    model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
                   loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'])
 
