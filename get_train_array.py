@@ -70,10 +70,10 @@ def load_data(filepath):
     for fi in files:
         fi_d = os.path.join(filepath, fi + '/')
         if os.path.isdir(fi_d):
-            if fi in lst:
-                global label
-                load_data(fi_d)
-                label += 1
+            # if fi in lst:
+            global label
+            load_data(fi_d)
+            label += 1
         else:
             labels.append(label)
             img = mi.imread(fi_d[:-1])

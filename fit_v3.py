@@ -14,12 +14,12 @@ model = get_model.get_model()  # 选择模型
 # (train_image, val_image, train_label, val_label) = get_train_array.load_data('data/train/')
 # (test_image, test_label) = get_test_array.load_data('data/test/')
 
-logs_path = "./logs/"
+logs_path = "./logs_cut/"
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logs_path, histogram_freq=1)
 
 # 使用 ModelCheckpoint 回调函数，保存测试准确率达到0.95以上的模型，并在训练到该模型时停止
 checkpoint_callback = callbacks.ModelCheckpoint(
-    filepath='Chinese_recognition_model_v3.h5',
+    filepath='cut_recognition_model.h5',
     monitor='val_accuracy',
     save_best_only=True,
     save_weights_only=False,
@@ -27,11 +27,11 @@ checkpoint_callback = callbacks.ModelCheckpoint(
     verbose=1)
 
 model.fit(train_image, train_label, validation_data=(val_image, val_label),
-          epochs=50, batch_size=32,
+          epochs=80, batch_size=16,
           callbacks=[tensorboard_callback, checkpoint_callback])
 
 # 加载测试准确率达到0.95以上的模型
-model = models.load_model('Chinese_recognition_model_v3.h5')
+model = models.load_model('cut_recognition_model.h5')
 
 # 在测试集上评估模型性能
 test_scores = model.evaluate(test_image, test_label)
@@ -41,12 +41,12 @@ test_accuracy = test_scores[1]
 strTime = time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime())
 print('Time:', strTime, '   ', 'Test Accuracy:', test_accuracy)
 
-# for i in range(1, 8):
-#     print()
-#     model.fit(train_image, train_label)
-#     test_scores = model.evaluate(test_image, test_label)
-#     test_accuracy = test_scores[1]
-#     strTime = time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime())
-#     print('Time:', strTime, '   ', 'Test Accuracy:', test_accuracy)
-#     if test_accuracy > 0.95:
-#         break
+for i in range(1, 8):
+    print()
+    model.fit(train_image, train_label)
+    test_scores = model.evaluate(test_image, test_label)
+    test_accuracy = test_scores[1]
+    strTime = time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime())
+    print('Time:', strTime, '   ', 'Test Accuracy:', test_accuracy)
+    if test_accuracy > 0.95:
+        break
