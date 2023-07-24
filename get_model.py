@@ -26,12 +26,12 @@ def get_model():
     model.add(Dense(1024, activation='relu'))
 
     model.add(Dropout(0.2))
-    model.add(Dense(3755, activation='softmax'))
+    model.add(Dense(986, activation='softmax'))
 
     model.summary()
 
     # 选择优化器和损失函数
-    model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
+    model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
                   loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'])
 
